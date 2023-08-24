@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @Threadsafe
  */
 public class Database {
+    // 单例模式
     private static final AtomicReference<Database> _instance = new AtomicReference<>(new Database());
     private final Catalog _catalog;
     private final BufferPool _bufferpool;
