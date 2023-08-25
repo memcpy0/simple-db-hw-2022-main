@@ -38,6 +38,10 @@ public class BufferPool {
      */
     public static final int DEFAULT_PAGES = 50;
 
+    private int numPages = DEFAULT_PAGES;
+
+    private ArrayList<Page> pagePool;
+
     /**
      * Creates a BufferPool that caches up to numPages pages.
      *
@@ -45,6 +49,8 @@ public class BufferPool {
      */
     public BufferPool(int numPages) {
         // TODO: some code goes here
+        this.numPages = numPages;
+        pagePool = new ArrayList<>();
     }
 
     public static int getPageSize() {
@@ -79,6 +85,9 @@ public class BufferPool {
     public Page getPage(TransactionId tid, PageId pid, Permissions perm)
             throws TransactionAbortedException, DbException {
         // TODO: some code goes here
+        for (Page page : pagePool) {
+            if (pid.equals(page.getId())) return page;
+        }
         return null;
     }
 
@@ -218,5 +227,4 @@ public class BufferPool {
         // TODO: some code goes here
         // not necessary for lab1
     }
-
 }
