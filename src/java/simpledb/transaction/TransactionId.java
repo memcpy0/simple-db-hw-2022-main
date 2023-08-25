@@ -10,7 +10,9 @@ public class TransactionId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    // 静态计数器
     static final AtomicLong counter = new AtomicLong(0);
+    // 每个事务的ID在一开始就设置，往后不能更改
     final long myid;
 
     public TransactionId() {

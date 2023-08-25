@@ -58,10 +58,10 @@ public class StringField implements Field {
     public void serialize(DataOutputStream dos) throws IOException {
         String s = value;
         int overflow = maxSize - s.length();
-        if (overflow < 0) {
-            s = s.substring(0, maxSize);
+        if (overflow < 0) { // 如果字符串s的长度超过最大长度
+            s = s.substring(0, maxSize); // 只能写最大长度
         }
-        dos.writeInt(s.length());
+        dos.writeInt(s.length()); // 先写每个串的长度
         dos.writeBytes(s);
         while (overflow-- > 0)
             dos.write((byte) 0);

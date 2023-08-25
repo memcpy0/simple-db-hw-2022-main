@@ -6,6 +6,14 @@ import java.util.Objects;
  * Unique identifier for HeapPage objects.
  */
 public class HeapPageId implements PageId {
+    /**
+     * 数据库中表的ID
+     */
+    private int tableId;
+    /**
+     * 每张表的哪一页
+     */
+    private int pageNo;
 
     /**
      * Constructor. Create a page id structure for a specific page of a
@@ -16,6 +24,8 @@ public class HeapPageId implements PageId {
      */
     public HeapPageId(int tableId, int pgNo) {
         // TODO: some code goes here
+        this.tableId = tableId;
+        this.pageNo = pgNo;
     }
 
     /**
@@ -23,7 +33,7 @@ public class HeapPageId implements PageId {
      */
     public int getTableId() {
         // TODO: some code goes here
-        return 0;
+        return tableId;
     }
 
     /**
@@ -32,7 +42,7 @@ public class HeapPageId implements PageId {
      */
     public int getPageNumber() {
         // TODO: some code goes here
-        return 0;
+        return pageNo;
     }
 
     /**
@@ -43,7 +53,7 @@ public class HeapPageId implements PageId {
      */
     public int hashCode() {
         // TODO: some code goes here
-        throw new UnsupportedOperationException("implement this");
+        return Objects.hash(tableId, pageNo);
     }
 
     /**
@@ -55,14 +65,18 @@ public class HeapPageId implements PageId {
      */
     public boolean equals(Object o) {
         // TODO: some code goes here
-        return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HeapPageId other = (HeapPageId) o;
+        return tableId == other.tableId && pageNo == other.pageNo;
     }
 
     /**
      * Return a representation of this object as an array of
      * integers, for writing to disk.  Size of returned array must contain
      * number of integers that corresponds to number of args to one of the
-     * constructors.
+     * constructors. 返回的数组大小必须包含与构造函数参数数量相对应的整数数量。
      */
     public int[] serialize() {
         int[] data = new int[2];
@@ -72,5 +86,4 @@ public class HeapPageId implements PageId {
 
         return data;
     }
-
 }
