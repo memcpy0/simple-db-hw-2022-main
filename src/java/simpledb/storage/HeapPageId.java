@@ -11,7 +11,7 @@ public class HeapPageId implements PageId {
      */
     private int tableId;
     /**
-     * 每张表的哪一页
+     * 每张表的哪一页,从0开始
      */
     private int pageNo;
 

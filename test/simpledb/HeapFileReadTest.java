@@ -74,7 +74,7 @@ public class HeapFileReadTest extends SimpleDbTestBase {
         HeapPageId pid = new HeapPageId(hf.getId(), 0);
         HeapPage page = (HeapPage) hf.readPage(pid);
 
-        // NOTE(ghuo): we try not to dig too deeply into the Page API here; we
+        // NOTE: we try not to dig too deeply into the Page API here; we
         // rely on HeapPageTest for that. perform some basic checks.
         assertEquals(484, page.getNumUnusedSlots());
         assertTrue(page.isSlotUsed(1));

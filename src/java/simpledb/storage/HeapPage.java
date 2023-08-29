@@ -3,13 +3,10 @@ package simpledb.storage;
 import simpledb.common.Catalog;
 import simpledb.common.Database;
 import simpledb.common.DbException;
-import simpledb.common.Debug;
 import simpledb.transaction.TransactionId;
 
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * Each instance of HeapPage stores data for one page of HeapFiles and
@@ -65,7 +62,7 @@ public class HeapPage implements Page {
             // allocate and read the actual records of this page
             for (int i = 0; i < tuples.length; i++) {
                 tuples[i] = readNextTuple(dis, i); // 从输入中读取第i个slot的那个元组
-                if (tuples[i] != null) System.out.println(i + " " + tuples[i]);
+//                if (tuples[i] != null) System.out.println(i + " " + tuples[i]);
             }
         } catch (NoSuchElementException e) {
             e.printStackTrace();
@@ -350,7 +347,7 @@ public class HeapPage implements Page {
                 if (i >= tuples.length)
                     throw new NoSuchElementException();
                 cursor = i + 1;
-                if (isSlotUsed(i)) {
+                if (isSlotUsed(i)) { // 一直到找到一个使用的slot为止
                     ++usedSlotCursor;
                     return tuples[i];
                 }

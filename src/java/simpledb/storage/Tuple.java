@@ -17,18 +17,14 @@ public class Tuple implements Serializable, Iterable<Field> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 该元组引用一个TupleDesc对象描述包含的所有字段
+     * 该元组引用一个TupleDesc对象描述包含的所有字段，包括字段的类型和名称
      */
     private TupleDesc tupleDesc;
+
     /**
      * 元组中的所有字段，包括字段的类型和值等
      */
     private ArrayList<simpledb.storage.Field> fields;
-
-    /**
-     * 元组中的所有字段的名称，名称可能为空，即匿名字段
-     */
-    private ArrayList<String> names;
 
     /**
      * 记录该元组在哪一个表的哪一页的特定位置
@@ -45,18 +41,15 @@ public class Tuple implements Serializable, Iterable<Field> {
         // TODO: some code goes here
         tupleDesc = td;
         fields = new ArrayList<>();
-        names = new ArrayList<>();
 
         // 按照TupleDesc中的描述创建一个新元组
         for (TupleDesc.TDItem tdItem : td) {
             Type fieldType = tdItem.fieldType;
-            String fieldName = tdItem.fieldName;
             if (Type.INT_TYPE.equals(fieldType)) { // 是int类型
                 fields.add(new IntField(0));
             } else if (Type.STRING_TYPE.equals(fieldType)) { // 是固定长度的String
                 fields.add(new StringField("", 0));
             }
-            names.add(fieldName);
         }
     }
 

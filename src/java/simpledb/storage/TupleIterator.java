@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 /**
  * Implements a OpIterator by wrapping an Iterable<Tuple>.
+ * 元组迭代器
  */
 public class TupleIterator implements OpIterator {
     /**

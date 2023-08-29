@@ -75,7 +75,8 @@ public class ScanTest extends SimpleDbTestBase {
 
     /** Verifies that the buffer pool is actually caching data.
      * @throws TransactionAbortedException
-     * @throws DbException */
+     * @throws DbException
+     */
     @Test public void testCache() throws IOException, DbException, TransactionAbortedException {
         /* Counts the number of successful `readPage()` calls. */
         class InstrumentedHeapFile extends HeapFile {

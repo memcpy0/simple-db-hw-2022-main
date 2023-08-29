@@ -14,6 +14,8 @@ import java.util.List;
  * file has a unique id used to store metadata about the table in the Catalog.
  * DbFiles are generally accessed through the buffer pool, rather than directly
  * by operators.
+ * 这是一个用于表示磁盘上数据库文件的接口。每个表由一个单独的DbFile表示。DbFile可以获取页面并遍历元组。
+ * 每个文件都有一个唯一的ID，用于在目录中存储有关表的元数据。通常情况下，通过缓冲池而不是直接通过操作符访问DbFiles。
  */
 public interface DbFile {
     /**

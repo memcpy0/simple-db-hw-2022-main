@@ -216,20 +216,6 @@ public class Catalog {
             return tableDescs.get(lastRet = i).getFile().getId();
         }
 
-//        @Override
-//        public void remove() {
-//            if (lastRet < 0)
-//                throw new IllegalStateException();
-//
-//            try {
-//                tableDescs.remove(lastRet);
-//                cursor = lastRet;
-//                lastRet = -1;
-//            } catch (IndexOutOfBoundsException ex) {
-//                throw new ConcurrentModificationException();
-//            }
-//        }
-
         @Override
         public void forEachRemaining(Consumer<? super Integer> action) {
             Objects.requireNonNull(action);

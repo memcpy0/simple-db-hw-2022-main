@@ -40,7 +40,7 @@ public class BufferPool {
 
     private int numPages = DEFAULT_PAGES;
 
-    private ArrayList<Page> pagePool;
+    private HashMap<PageId, Page> simpleCache;
 
     /**
      * Creates a BufferPool that caches up to numPages pages.
@@ -50,7 +50,7 @@ public class BufferPool {
     public BufferPool(int numPages) {
         // TODO: some code goes here
         this.numPages = numPages;
-        pagePool = new ArrayList<>();
+        simpleCache = new HashMap<>();
     }
 
     public static int getPageSize() {
@@ -85,10 +85,12 @@ public class BufferPool {
     public Page getPage(TransactionId tid, PageId pid, Permissions perm)
             throws TransactionAbortedException, DbException {
         // TODO: some code goes here
-        for (Page page : pagePool) {
-            if (pid.equals(page.getId())) return page;
+        DbFile file = Database.getCatalog().getDatabaseFile(pid.getTableId());
+        if (!simpleCache.containsKey(pid)) {
+            Page page = file.readPage(pid); // 用dbFile实现的readPage方法读取不同类型的Page
+            simpleCache.put(pid, page);
         }
-        return null;
+        return simpleCache.get(pid);
     }
 
     /**
