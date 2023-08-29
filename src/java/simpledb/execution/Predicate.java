@@ -16,6 +16,9 @@ public class Predicate implements Serializable {
      * Constants used for return codes in Field.compare
      */
     public enum Op implements Serializable {
+        /**
+         * 等于，不等于，更大，更小，大于等于，小于等于
+         */
         EQUALS, GREATER_THAN, LESS_THAN, LESS_THAN_OR_EQ, GREATER_THAN_OR_EQ, LIKE, NOT_EQUALS;
 
         /**
@@ -48,15 +51,21 @@ public class Predicate implements Serializable {
 
     }
 
+    private int field;
+    private Op op;
+    private Field operand;
     /**
      * Constructor.
      *
-     * @param field   field number of passed in tuples to compare against.
-     * @param op      operation to use for comparison
-     * @param operand field value to compare passed in tuples to
+     * @param field   field number of passed in tuples to compare against. 和元组的哪个字段做比较
+     * @param op      operation to use for comparison 比较操作
+     * @param operand field value to compare passed in tuples to 要比较的值
      */
     public Predicate(int field, Op op, Field operand) {
         // TODO: some code goes here
+        this.field = field;
+        this.op = op;
+        this.operand = operand;
     }
 
     /**
@@ -64,7 +73,7 @@ public class Predicate implements Serializable {
      */
     public int getField() {
         // TODO: some code goes here
-        return -1;
+        return field;
     }
 
     /**
@@ -72,7 +81,7 @@ public class Predicate implements Serializable {
      */
     public Op getOp() {
         // TODO: some code goes here
-        return null;
+        return op;
     }
 
     /**
@@ -80,7 +89,7 @@ public class Predicate implements Serializable {
      */
     public Field getOperand() {
         // TODO: some code goes here
-        return null;
+        return operand;
     }
 
     /**
@@ -94,7 +103,8 @@ public class Predicate implements Serializable {
      */
     public boolean filter(Tuple t) {
         // TODO: some code goes here
-        return false;
+        Field f = t.getField(field); // 某个元组的第field个字段
+        return f.compare(op, operand);
     }
 
     /**
@@ -103,6 +113,10 @@ public class Predicate implements Serializable {
      */
     public String toString() {
         // TODO: some code goes here
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("f = ").append(field).append(" ");
+        sb.append("op = ").append(op).append(" ");
+        sb.append("operand = ").append(operand);
+        return sb.toString();
     }
 }
