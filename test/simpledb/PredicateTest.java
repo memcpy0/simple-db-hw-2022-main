@@ -64,4 +64,3 @@ public class PredicateTest extends SimpleDbTestBase{
     return new JUnit4TestAdapter(PredicateTest.class);
   }
 }
-

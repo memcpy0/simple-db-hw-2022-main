@@ -16,12 +16,17 @@ public class Project extends Operator {
 
     private static final long serialVersionUID = 1L;
     private OpIterator child;
+    /**
+     * 返回一个新的元组，使用td作为描述符
+     */
     private final TupleDesc td;
     private final List<Integer> outFieldIds;
 
     /**
      * Constructor accepts a child operator to read tuples to apply projection
+     * 会接收一个子operator来读取元组并应用projection
      * to and a list of fields in output tuple
+     * 还会接收一个输出字段的ID列表
      *
      * @param fieldList The ids of the fields child's tupleDesc to project out
      * @param typesList the types of the fields in the final projection
@@ -39,7 +44,7 @@ public class Project extends Operator {
         String[] fieldAr = new String[fieldList.size()];
         TupleDesc childtd = child.getTupleDesc();
 
-        for (int i = 0; i < fieldAr.length; i++) {
+        for (int i = 0; i < fieldAr.length; i++) { // 从孩子tupleDesc中获取各字段的名称
             fieldAr[i] = childtd.getFieldName(fieldList.get(i));
         }
         td = new TupleDesc(types, fieldAr);
@@ -67,6 +72,7 @@ public class Project extends Operator {
     /**
      * Operator.fetchNext implementation. Iterates over tuples from the child
      * operator, projecting out the fields from the tuple
+     * 真正实现功能的代码
      *
      * @return The next tuple, or null if there are no more tuples
      */
@@ -74,9 +80,9 @@ public class Project extends Operator {
             TransactionAbortedException, DbException {
         if (!child.hasNext()) return null;
         Tuple t = child.next();
-        Tuple newTuple = new Tuple(td);
-        newTuple.setRecordId(t.getRecordId());
-        for (int i = 0; i < td.numFields(); i++) {
+        Tuple newTuple = new Tuple(td); // 投影后要输出的元组
+        newTuple.setRecordId(t.getRecordId()); // 元组的位置
+        for (int i = 0; i < td.numFields(); i++) { // 设置字段
             newTuple.setField(i, t.getField(outFieldIds.get(i)));
         }
         return newTuple;

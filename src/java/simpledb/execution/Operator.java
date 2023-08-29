@@ -27,13 +27,13 @@ public abstract class Operator implements OpIterator {
 
     public Tuple next() throws DbException, TransactionAbortedException,
             NoSuchElementException {
-        if (next == null) {
+        if (next == null) { // 没有通过hasNext预先取出
             next = fetchNext();
             if (next == null)
                 throw new NoSuchElementException();
         }
 
-        Tuple result = next;
+        Tuple result = next; // 通过hasNext取出
         next = null;
         return result;
     }

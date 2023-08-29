@@ -59,6 +59,7 @@ public class OrderBy extends Operator {
         // load all the tuples in a collection, and sort it
         while (child.hasNext())
             childTups.add(child.next());
+        // 对所有元组进行排序，使用TupleComparator排序器
         childTups.sort(new TupleComparator(orderByField, asc));
         it = childTups.iterator();
         super.open();
@@ -69,6 +70,9 @@ public class OrderBy extends Operator {
         it = null;
     }
 
+    /**
+     * 重新回到所有元组的迭代器开头
+     */
     public void rewind() {
         it = childTups.iterator();
     }
@@ -113,7 +117,7 @@ class TupleComparator implements Comparator<Tuple> {
         Field t2 = (o2).getField(field);
         if (t1.compare(Predicate.Op.EQUALS, t2))
             return 0;
-        if (t1.compare(Predicate.Op.GREATER_THAN, t2))
+        if (t1.compare(Predicate.Op.GREATER_THAN, t2)) // t1>t2
             return asc ? 1 : -1;
         else
             return asc ? -1 : 1;
